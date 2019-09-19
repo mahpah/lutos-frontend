@@ -33,7 +33,8 @@ jobs:
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
 
-    - uses: ./k8s
+    - uses: ./
+      id: k8s
       name: deploy
       if: startsWith(github.ref, 'refs/heads/release/')
       with:
