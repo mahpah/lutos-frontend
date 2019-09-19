@@ -18,11 +18,13 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - uses: actions/docker/cli@master
-      args: build . -t "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
+      with:
+        args: build . -t "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
 
     - uses: actions/docker/cli@master
-      args: push "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
+      with:
+        args: push "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
