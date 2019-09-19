@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - develop
+      - release/*
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,19 +13,27 @@ jobs:
     - uses: actions/checkout@v1
 
     - uses: actions/docker/login@master
+      name: login to registry
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
     - uses: actions/docker/cli@master
+      name: build image
       with:
         args: build . -t "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
 
     - uses: actions/docker/cli@master
+      name: push image
       with:
         args: push "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
       env:
         DOCKER_REGISTRY_URL: docker.debugger.vn
+
+    - uses: ./k8s
+      name: deploy
+      if: startsWith(github.ref, 'release/')
+      run: cat ./scripts/k8s/frontend-deployment.yml | sed -e "s/\$IMAGE_TAG/$GITHUB_SHA/g" | kubectl apply -f -

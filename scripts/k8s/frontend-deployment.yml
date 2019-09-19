@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    eln.service: frontend
+    app: eln
+  name: frontend
+  namespace: everlearn-beta
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      eln.service: frontend
+  template:
+    metadata:
+      labels:
+        eln.service: frontend
+        app: eln
+    spec:
+      containers:
+      - image: docker.debugger.vn/lutos/frontend:$IMAGE_TAG
+        imagePullPolicy: Always
+        name: frontend
+        ports:
+          - containerPort: 80
+            name: http
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 5m
+            memory: 20Mi
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: dgm-registry
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: everlearn-beta
+  labels:
+    compose: frontend.service
+    app: eln
+spec:
+  selector:
+    eln.service: frontend
+  ports:
+  - name: admin-http
+    port: 5000
+    targetPort: 5000
+  - name: learner-http
+    port: 5050
+    targetPort: 5050
