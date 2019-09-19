@@ -38,5 +38,5 @@ jobs:
       name: deploy
       if: startsWith(github.ref, 'refs/heads/release/')
       with:
-        entrypoint: "sh -l -c"
-        args: cat ./scripts/k8s/frontend-deployment.yml | sed -e "s/\$IMAGE_TAG/$GITHUB_SHA/g" | kubectl apply -f -
+        entrypoint: "/bin/sh"
+        args: -l -c cat ./scripts/k8s/frontend-deployment.yml | sed -e "s/\$IMAGE_TAG/$GITHUB_SHA/g" | kubectl apply -f -
