@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    
+    - uses: actions/docker/login@master
+      secrets: ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+      env:
+      - DOCKER_REGISTRY_URL: docker.debugger.vn
+      
+    - uses: actions/docker/cli@master
+      args: build . -t "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
+      env:
+      - DOCKER_REGISTRY_URL: docker.debugger.vn
+      
+    - uses: actions/docker/cli@master
+      args: push "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
+      env:
+      - DOCKER_REGISTRY_URL: docker.debugger.vn
