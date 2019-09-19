@@ -14,17 +14,13 @@ jobs:
           DOCKER_REGISTRY_URL: docker.debugger.vn
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: docker://docker/compose:1.24.1
+      - run: docker-compose build
         name: build
-        with:
-          args: "build"
         env:
           TAG: $GITHUB_SHA
           DOCKER_REGISTRY: docker.debugger.vn/
       - name: publish
-        uses: docker://docker/compose:1.24.1
-        with:
-          args: "push"
+        run: docker-compose push
         env:
           TAG: $GITHUB_SHA
           DOCKER_REGISTRY: docker.debugger.vn/
