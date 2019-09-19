@@ -14,7 +14,7 @@ jobs:
           DOCKER_REGISTRY_URL: docker.debugger.vn
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker build . -t "$DOCKER_REGISTRY_URL/lutos/frontend:$GITHUB_SHA"
+      - run: docker build . -t "$docker.debugger.vn/lutos/frontend:$GITHUB_SHA"
         name: build
         env:
           TAG: $GITHUB_SHA
