@@ -20,5 +20,5 @@ RUN curl -L -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-releas
   chmod +x /usr/bin/kubectl && \
   kubectl version --client
 
-COPY dryrun /usr/bin/dryrun
-CMD ["dryrun"]
+ENTRYPOINT ["kubectl"]
+
