@@ -108,6 +108,33 @@
           }
         }
       }
+    },
+    "data-contract": {
+      "root": "libs/data-contract",
+      "sourceRoot": "libs/data-contract/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/data-contract/.eslintrc",
+            "tsConfig": [
+              "libs/data-contract/tsconfig.lib.json",
+              "libs/data-contract/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/data-contract/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/data-contract/jest.config.js",
+            "tsConfig": "libs/data-contract/tsconfig.spec.json"
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -13,6 +13,9 @@
     },
     "user-ui-e2e": {
       "tags": []
+    },
+    "data-contract": {
+      "tags": []
     }
   }
 }

@@ -1,9 +1,16 @@
-import { getGreeting } from '../support/app.po'
+import { createFeedApiResponse } from '../support/mock-feed'
 
 describe('user-ui', () => {
   beforeEach(() => cy.visit('/'))
 
   it('should display welcome message', () => {
-    getGreeting().contains('Welcome to user-ui!')
+    cy.server()
+    cy.route({
+      method: 'GET',
+      url: '/api/v1/feed*',
+      response: createFeedApiResponse(10)
+    })
+
+    cy.get('[data-testid="story-card"]').should(t => t.length > 0)
   })
 })

@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@lutos-frontend/data-contract": ["libs/data-contract/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
