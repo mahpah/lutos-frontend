@@ -27,7 +27,22 @@ export type Document = BaseItem & {
   isPreviewSupported: boolean
 }
 
+export type BookAuthor = {
+  id: string
+  name: string
+}
+
+export type Book = BaseItem & {
+  type: 'Book',
+  title: string
+  author: BookAuthor
+  isbn: string
+  publisher: string
+  coverImageUrl: string
+}
+
 export type Item =
   | Article
   | Link
   | Document
+  | Book

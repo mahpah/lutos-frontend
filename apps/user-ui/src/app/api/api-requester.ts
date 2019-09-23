@@ -1,7 +1,7 @@
 import { environment } from '../../environments/environment'
 import axios, { Method, ResponseType } from 'axios'
 
-const createApiUrl = (pattern: string) => `${environment.apiUrl}/${pattern}`
+const createApiUrl = (pattern: string) => `${environment.apiUrl}${pattern}`
 
 export type ApiRequestOption = {
   method: Method,

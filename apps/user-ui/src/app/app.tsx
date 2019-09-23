@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import './app.scss'
 
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { AppNavbar } from './app-navbar/app-navbar'
 import NewsFeed from './news-feed/news-feed'
+import MyLibrary from './library/my-library'
+import { CurrentUser } from './shared/current-user.context'
+import { whoAmI } from './api/user-api'
 
 export const App = () => {
+  const { setUser } = useContext(CurrentUser)
+
+  useEffect(() => {
+    whoAmI().then(res => setUser(res.data))
+  }, [setUser])
+
   return (
-    <div>
+    <>
       <AppNavbar></AppNavbar>
       <Route
         path="/"
@@ -17,16 +26,13 @@ export const App = () => {
         )}
       />
       <Route
-        path="/page-2"
+        path="/library"
         exact
         render={() => (
-          <div>
-            <Link to="/">Click here to go back to root page.</Link>
-          </div>
+          <MyLibrary></MyLibrary>
         )}
       />
-      {/* END: routes */}
-    </div>
+    </>
   )
 }
 
